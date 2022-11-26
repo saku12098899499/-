@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+ 
+{% block content %}
+ 
+<div class="container">
+    <h1>記事詳細</h1>
+    <hr>
+    <p>タイトル：{{ object.title }}</p>  <!--detail_Aritcleで定義したobjectを使用-->
+    <p>ユーザー名：{{ object.author }}</p>
+    <p>カテゴリー：{{ object.category }}</p>
+    <p>投稿内容：{{ object.content }}</p>
+    <p>レーティング：{{ object.rating }}</p>
+    {% if object.image %}    <!--もし画像ファイルがあれば画像を表示する-->                   
+    <p><img src="{{object.image.url}}"></p>
+    {% endif %}
+    <p>投稿日：{{ object.created_at|date:"Y-m-j H:i:s" }}<br>
+    更新日：{{ object.updated_at|date:"Y-m-j H:i:s" }}</p>
+</div>
+<div class='mt-4'>
+    {% if not request.user.is_anonymous %} 
+    <a href='{% url "post:comment_create" object.pk %}' class='btn btn-primary mr-3'>コメント</a>
+    {% endif %}
+
+    <a href='{% url "post:index" %}' class='btn btn-outline-primary offset-8'>一覧に戻る</a>
+</div>
+<br>
+<!--コメント表示-->
+
+<div class="ui segment">
+    <h1>コメント一覧</h1>
+    <hr>
+    <h2>平均評価：{{ average }} / 5</h2>
+   
+    <hr>
+    {% if comment %}
+    {% for com in comment %}
+    <div class="ui segment secondary">
+        <p>名前：{{com.user}}
+        <br> 
+        本文：{{com.comment}}
+        <br>
+        {{com.created_at}}</p>
+        
+    
+
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="ui warning message"><p>まだコメントはありません</p></div>
+    {% endif %}
+</div>
+
+<a href='{% url "post:index" %}' class='btn btn-outline-primary offset-10'>一覧に戻る</a>
+<p>
+ 
+</p>
+
+{% endblock %}

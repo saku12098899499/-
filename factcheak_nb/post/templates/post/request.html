@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}  <!--layout.htmlが継承するテンプレート(親となるテンプレートがlayout.html)-->
+
+{% block content %}  <!--endblockまで記載した内容が親店プレートに反映される-->
+
+<h1>リクエストフォーム</h1>  <!--h1 classで見出しを表示-->
+
+
+<form action='' method='post' enctype="multipart/form-data">  <!--サーバにデータを送る形式をpostで指定-->
+    {% csrf_token %}  <!--なりすまし投稿の防止など悪意ある行為を防止するcsrfの検証のデフォルト設定-->
+    <p>タイトル:<br>
+    {{ form.title }}</p>  <!--pタグで一文を改行-->
+    <p>カテゴリー:<br>
+    {{ form.category }}</p>
+    <p>本文:<br>  <!--brタグでここから改行-->
+    {{ form.content }}</p>
+    <p>報酬:<br>
+    {{ form.reward }}</p>
+    <p>ウォレットアドレス:<br>
+    {{ form.wallet }}</p>
+
+    <button type="submit" class="btn btn-outline-primary" name="create" value="1">作成</button>
+
+</form>
+<div class='mt-3'>
+    <a href='JavaScript:history.back()' class='btn btn-outline-primary'>戻る</a>
+    <!--a href でクリックしたリンク先を指定  history.back() ← 一つ前のページに戻る-->
+</div>
+
+{% endblock %}
+

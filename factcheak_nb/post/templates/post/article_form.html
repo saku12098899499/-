@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}  <!--extendsで指定したlayout.htmlをarticle_form.htmlに継承--> 
+
+{% block content %}  <!--contentというブロック名、endblockまで記載した内容が反映される-->
+
+<h1 class= "mt-3 mb-4">{{ object|yesno:'投稿内容の更新,新規投稿'}}</h1>  <!--h1 classで見出しを表示-->
+<!--mt-(数字)で外側の空白を指定--> 
+<!--yesnoフィルターで、trueの場合→投稿内容の更新
+                       falseの場合→新規投稿の作成-->
+
+<form action='' method='post' enctype="multipart/form-data">  <!--サーバにデータを送る形式をpostで指定-->
+    {% csrf_token %}  <!--なりすまし投稿の防止など悪意ある行為を防止するcsrfの検証のデフォルト設定-->
+    <p>タイトル:<br>
+    {{ form.title }}</p>  <!--pタグで一文を改行-->
+    <p>カテゴリー:<br>
+    {{ form.category }}</p>
+    <p>本文:<br>  <!--brタグでここから改行-->
+    {{ form.content }}</p>
+    <p>レーティング:<br>
+    {{ form.rating }}</p>
+    <p>{{ form.image }}</p>
+
+    <button type = 'submit' class='btn btn-outline-primary'>{{ object|yesno:'更新,作成' }}</button>
+    <!--formタグで作成したフォーム内にボタンを作成-->
+    <!--.btn-outline-でボタンの背景色を指定-->
+</form>
+<div class='mt-3'>
+    <a href='JavaScript:history.back()' class='btn btn-outline-primary'>戻る</a>
+    <!--a href でクリックしたリンク先を指定  history.back() ← 一つ前のページに戻る-->
+</div>
+
+{% endblock %}
+
